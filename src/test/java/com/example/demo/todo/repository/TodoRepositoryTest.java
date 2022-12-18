@@ -20,7 +20,7 @@ class TodoRepositoryTest {
         ToDo toDo = new ToDo();
         toDo.setTitle("하하호호 수정하기");
         toDo.setDone(true);
-        toDo.setId("daf34a6e-2a96-45d8-b2ad-061d2fb8a511");
+        toDo.setId("0b108a6c-8175-4743-b5a5-6dcc740710f3");
 
         // when
         boolean flag = repository.modify(toDo);

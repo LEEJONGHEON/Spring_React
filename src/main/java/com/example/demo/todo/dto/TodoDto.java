@@ -13,7 +13,6 @@ public class TodoDto {
     private String id;
     private String title;
     private boolean done;
-
     private Date regDate;
 
     // ToDo에서 TodoDto가 필요한 필드를 빼오는 생성자

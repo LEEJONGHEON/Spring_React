@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // 역할: 컨트롤러와 저장소 사이의 잡일 처리 역할
@@ -25,8 +26,8 @@ public class TodoService {
          1. 컨트롤러에게 userId를 뺀 할일 리스트를 전달한다.
          2. 할일 목록의 카운트를 세서 따로 추가해서 전달한다.
      */
-    public FindAllDTO findAllServ() {
-        return new FindAllDTO(repository.findAll());
+    public FindAllDTO findAllServ(String userId) {
+        return new FindAllDTO(repository.findAll(userId));
     }
 
     public FindAllDTO createServ(final ToDo newTodo) {
@@ -39,10 +40,10 @@ public class TodoService {
         boolean flag = repository.save(newTodo);
         if (flag) log.info("새로운 할일 [Id: {}]이 저장되었습니다.", newTodo.getId());
 
-        return flag ? findAllServ() : null;
+        return flag ? findAllServ(newTodo.getUserId()) : null;
     }
 
-    public FindAllDTO deleteServ(String id) {
+    public FindAllDTO deleteServ(String id, String userId) {
 
         int x = 10, y = 20;
 //        System.out.println(false & y++ == 21);
@@ -55,7 +56,16 @@ public class TodoService {
             log.warn("delete fail!! not found id [{}]", id);
             throw new RuntimeException("delete fail!");
         }
-        return findAllServ();
+        return findAllServ(userId);
+    }
+
+    public FindAllDTO deleteAllServe(String userId) {
+        boolean flag = repository.removeAll(userId);
+        if (!flag) {
+            log.warn("delete fail! not found userId [{}]",userId);
+            throw new RuntimeException("delete Fail!");
+        }
+        return findAllServ(userId);
     }
 
 
@@ -69,10 +79,10 @@ public class TodoService {
         return toDo != null ? new TodoDto(toDo) : null;
     }
 
-    public FindAllDTO update(ToDo todo) {
+    public FindAllDTO update(ToDo toDo) {
 
-        boolean flag = repository.modify(todo);
-
-        return flag ? findAllServ() : new FindAllDTO();
+        boolean flag = repository.modify(toDo);
+        return flag ? findAllServ(toDo.getUserId()) : new FindAllDTO();
     }
+
 }

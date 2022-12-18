@@ -17,13 +17,19 @@
         WHERE id=#{id}
     </delete>
 
+    <delete id="removeAll">
+        DELETE FROM tbl_todo
+        WHERE userId=#{userId}
+    </delete>
+
     <select id="findAll" resultType="com.example.demo.todo.entity.ToDo">
         SELECT id, userId, title, done, regDate
         FROM tbl_todo
-        ORDER BY regData
+        WHERE userId=#{userId}
+        ORDER BY regDate
     </select>
 
-    <select id="findOne">
+    <select id="findOne" resultType="com.example.demo.todo.entity.ToDo">
         SELECT id, userId, title, done
         FROM tbl_todo
         WHERE id=#{id}
