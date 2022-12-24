@@ -15,4 +15,10 @@ public class HealthyCheckController {
         log.info("server is running...");
         return "server is running....";
     }
+
+    @GetMapping("/hello")
+    public String check123() {
+        log.info("hello123");
+        return "테스트";
+    }
 }
