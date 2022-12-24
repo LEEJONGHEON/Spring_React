@@ -15,6 +15,7 @@ public class TodoDto {
     private boolean done;
     private Date regDate;
 
+
     // ToDo에서 TodoDto가 필요한 필드를 빼오는 생성자
     public TodoDto(ToDo toDo) {
         this.id = toDo.getId();
